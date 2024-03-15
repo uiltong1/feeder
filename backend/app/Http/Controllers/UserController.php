@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\DTO\User\UserDto;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,14 +49,16 @@ class UserController extends Controller
     /**
      * Create a new user
      * 
-     * @param UserRequest $request
+     * @param Request $request
      * @return Response
      */
-    public function store(UserRequest $request): Response
+    public function store(Request $request): Response
     {
         try {
             return response(
-                $this->service->store($request->all()),
+                $this->service->store(
+                    new UserDto(...$request->toArray())
+                )->toArray(),
                 Response::HTTP_CREATED
             );
         } catch (\Throwable $e) {
@@ -64,6 +66,7 @@ class UserController extends Controller
                 'title' => 'Error',
                 'message' => $e->getMessage(),
                 'line' => $e->getLine(),
+                'file' => $e->getFile(),
             ], $e->getCode() !== 0 ?
                 $e->getCode() : Response::HTTP_BAD_REQUEST);
         }
@@ -79,7 +82,10 @@ class UserController extends Controller
     public function show(int $id): Response
     {
         try {
-            return response($this->service->getById($id), Response::HTTP_OK);
+            return response(
+                $this->service->getById($id)->toArray(),
+                Response::HTTP_OK
+            );
         } catch (\Throwable $e) {
             return response([
                 'title' => 'Error',
@@ -94,17 +100,17 @@ class UserController extends Controller
      * Update a user
      * @urlParam id integer required 
      * 
-     * @param UserRequest $request
+     * @param Request $request
      * @return Response
      */
-    public function update(int $id, UserRequest $request): Response
+    public function update(int $id, Request $request): Response
     {
         try {
             return response(
                 $this->service->update(
                     $id,
-                    $request->all()
-                ),
+                    new UserDto(...$request->all())
+                )->toArray(),
                 Response::HTTP_OK
             );
         } catch (\Throwable $e) {

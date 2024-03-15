@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\DTO\User\UserDto;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Error;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -43,13 +43,14 @@ class UserService
 
     /**
      *
-     * @param array $params
-     * @return User
+     * @param UserDto $params
+     * @return UserDto
      */
-    public function store(array $params): User
+    public function store(UserDto $params): UserDto
     {
         try {
-            return $this->repository->create($params);
+            $user = $this->repository->create($params->toArray());
+            return new UserDto(...$user->toArray());
         } catch (Throwable $e) {
             Log::error("Failed to create user", [
                 'message' => $e->getMessage(),
@@ -65,12 +66,13 @@ class UserService
     /**
      *
      * @param integer $id
-     * @return User
+     * @return UserDto
      */
-    public function getById(int $id): User
+    public function getById(int $id): UserDto
     {
         try {
-            return $this->repository->getById($id);
+            $user = $this->repository->getById($id);
+            return new UserDto(...$user->toArray());
         } catch (Throwable $e) {
             Log::error("Failed to create user", [
                 'message' => $e->getMessage(),
@@ -85,13 +87,14 @@ class UserService
     /**
      *
      * @param integer $id
-     * @param array $params
-     * @return User
+     * @param UserDto $userDto
+     * @return UserDto
      */
-    public function update(int $id, array $params): User
+    public function update(int $id, UserDto $userDto): UserDto
     {
         try {
-            return $this->repository->update($id, $params);
+            $user = $this->repository->update($id, $userDto->toArray());
+            return new UserDto(...$user->toArray());
         } catch (Throwable $e) {
             Log::error("Failed to update user", [
                 'message' => $e->getMessage(),
@@ -113,7 +116,7 @@ class UserService
     {
         try {
 
-            $user = $this->getById($id);
+            $user = $this->repository->getById($id);
             if ($user?->posts->count()) {
                 throw new Error("Não é possível excluir usuários que tem posts vinculados");
             }
