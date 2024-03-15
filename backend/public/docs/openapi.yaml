@@ -1,0 +1,737 @@
+openapi: 3.0.3
+info:
+  title: 'API Feeder'
+  description: 'API for managing users, posts and tags'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8085'
+paths:
+  /api/tags:
+    get:
+      summary: 'Get list of tags'
+      operationId: getListOfTags
+      description: ''
+      parameters:
+        -
+          in: query
+          name: slug
+          description: ''
+          example: harum
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: harum
+        -
+          in: query
+          name: page
+          description: ''
+          example: 19
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 19
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 19
+                  data: []
+                  first_page_url: 'http://localhost:8085/api/tags?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://localhost:8085/api/tags?page=1'
+                  links:
+                    -
+                      url: 'http://localhost:8085/api/tags?page=18'
+                      label: '&laquo; Previous'
+                      active: false
+                    -
+                      url: 'http://localhost:8085/api/tags?page=1'
+                      label: '1'
+                      active: false
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      active: false
+                  next_page_url: null
+                  path: 'http://localhost:8085/api/tags'
+                  per_page: 10
+                  prev_page_url: 'http://localhost:8085/api/tags?page=18'
+                  to: null
+                  total: 0
+                properties:
+                  current_page:
+                    type: integer
+                    example: 19
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/tags?page=1'
+                  from:
+                    type: string
+                    example: null
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/tags?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: 'http://localhost:8085/api/tags?page=18'
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8085/api/tags?page=1'
+                        label: '1'
+                        active: false
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: 'http://localhost:8085/api/tags?page=18'
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                  path:
+                    type: string
+                    example: 'http://localhost:8085/api/tags'
+                  per_page:
+                    type: integer
+                    example: 10
+                  prev_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/tags?page=18'
+                  to:
+                    type: string
+                    example: null
+                  total:
+                    type: integer
+                    example: 0
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Create a new tag'
+      operationId: createANewTag
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slug:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: hldenmqljas
+              required:
+                - slug
+      security: []
+  '/api/tags/{id}':
+    get:
+      summary: 'Get a tag'
+      operationId: getATag
+      description: ''
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  title: Error
+                  message: 'No query results for model [App\Models\Tag].'
+                  line: 598
+                properties:
+                  title:
+                    type: string
+                    example: Error
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Tag].'
+                  line:
+                    type: integer
+                    example: 598
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update a tag'
+      operationId: updateATag
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slug:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: whnzq
+              required:
+                - slug
+      security: []
+    delete:
+      summary: 'Update a tag'
+      operationId: updateATag
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: ''
+        example: 20
+        required: true
+        schema:
+          type: integer
+  /api/users:
+    get:
+      summary: 'Get list of users'
+      operationId: getListOfUsers
+      description: ''
+      parameters:
+        -
+          in: query
+          name: email
+          description: ''
+          example: sage.schamberger@example.net
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: sage.schamberger@example.net
+        -
+          in: query
+          name: name
+          description: ''
+          example: facere
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: facere
+        -
+          in: query
+          name: page
+          description: ''
+          example: 12
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 12
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 12
+                  data: []
+                  first_page_url: 'http://localhost:8085/api/users?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://localhost:8085/api/users?page=1'
+                  links:
+                    -
+                      url: 'http://localhost:8085/api/users?page=11'
+                      label: '&laquo; Previous'
+                      active: false
+                    -
+                      url: 'http://localhost:8085/api/users?page=1'
+                      label: '1'
+                      active: false
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      active: false
+                  next_page_url: null
+                  path: 'http://localhost:8085/api/users'
+                  per_page: 10
+                  prev_page_url: 'http://localhost:8085/api/users?page=11'
+                  to: null
+                  total: 0
+                properties:
+                  current_page:
+                    type: integer
+                    example: 12
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/users?page=1'
+                  from:
+                    type: string
+                    example: null
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/users?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: 'http://localhost:8085/api/users?page=11'
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8085/api/users?page=1'
+                        label: '1'
+                        active: false
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: 'http://localhost:8085/api/users?page=11'
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                  path:
+                    type: string
+                    example: 'http://localhost:8085/api/users'
+                  per_page:
+                    type: integer
+                    example: 10
+                  prev_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/users?page=11'
+                  to:
+                    type: string
+                    example: null
+                  total:
+                    type: integer
+                    example: 0
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Create a new user'
+      operationId: createANewUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: eodzifxaqvidvhizgzcf
+                email:
+                  type: string
+                  description: 'Must be a valid email address. Must not be greater than 255 characters.'
+                  example: zoe.green@example.net
+              required:
+                - name
+                - email
+      security: []
+  '/api/users/{id}':
+    get:
+      summary: 'Get a user'
+      operationId: getAUser
+      description: ''
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  title: Error
+                  message: 'No query results for model [App\Models\User].'
+                  line: 598
+                properties:
+                  title:
+                    type: string
+                    example: Error
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\User].'
+                  line:
+                    type: integer
+                    example: 598
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update a user'
+      operationId: updateAUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: ykpoyfwmelkj
+                email:
+                  type: string
+                  description: 'Must be a valid email address. Must not be greater than 255 characters.'
+                  example: hessel.reva@example.com
+              required:
+                - name
+                - email
+      security: []
+    delete:
+      summary: 'Delete a user'
+      operationId: deleteAUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: ''
+        example: 8
+        required: true
+        schema:
+          type: integer
+  /api/posts:
+    get:
+      summary: 'Get list of posts'
+      operationId: getListOfPosts
+      description: ''
+      parameters:
+        -
+          in: query
+          name: title
+          description: ''
+          example: animi
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: animi
+        -
+          in: query
+          name: body
+          description: ''
+          example: aut
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: aut
+        -
+          in: query
+          name: user_id
+          description: ''
+          example: 8
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 8
+        -
+          in: query
+          name: page
+          description: ''
+          example: 6
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 6
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 6
+                  data: []
+                  first_page_url: 'http://localhost:8085/api/posts?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://localhost:8085/api/posts?page=1'
+                  links:
+                    -
+                      url: 'http://localhost:8085/api/posts?page=5'
+                      label: '&laquo; Previous'
+                      active: false
+                    -
+                      url: 'http://localhost:8085/api/posts?page=1'
+                      label: '1'
+                      active: false
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      active: false
+                  next_page_url: null
+                  path: 'http://localhost:8085/api/posts'
+                  per_page: 10
+                  prev_page_url: 'http://localhost:8085/api/posts?page=5'
+                  to: null
+                  total: 0
+                properties:
+                  current_page:
+                    type: integer
+                    example: 6
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/posts?page=1'
+                  from:
+                    type: string
+                    example: null
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/posts?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: 'http://localhost:8085/api/posts?page=5'
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost:8085/api/posts?page=1'
+                        label: '1'
+                        active: false
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: 'http://localhost:8085/api/posts?page=5'
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                  path:
+                    type: string
+                    example: 'http://localhost:8085/api/posts'
+                  per_page:
+                    type: integer
+                    example: 10
+                  prev_page_url:
+                    type: string
+                    example: 'http://localhost:8085/api/posts?page=5'
+                  to:
+                    type: string
+                    example: null
+                  total:
+                    type: integer
+                    example: 0
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Create a new post'
+      operationId: createANewPost
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: ufvxurtmlpxdrnrdwmtu
+                body:
+                  type: string
+                  description: ''
+                  example: ratione
+                user_id:
+                  type: string
+                  description: ''
+                  example: autem
+                tags:
+                  type: string
+                  description: ''
+                  example: perferendis
+              required:
+                - title
+                - body
+                - user_id
+                - tags
+      security: []
+  '/api/posts/{id}':
+    get:
+      summary: 'Get a post'
+      operationId: getAPost
+      description: ''
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  title: Error
+                  message: 'No query results for model [App\Models\Post].'
+                  line: 598
+                properties:
+                  title:
+                    type: string
+                    example: Error
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Post].'
+                  line:
+                    type: integer
+                    example: 598
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update a post'
+      operationId: updateAPost
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: hoqioicbyzlsuqjueyweomh
+                body:
+                  type: string
+                  description: ''
+                  example: ut
+                user_id:
+                  type: string
+                  description: ''
+                  example: est
+                tags:
+                  type: string
+                  description: ''
+                  example: exercitationem
+              required:
+                - title
+                - body
+                - user_id
+                - tags
+      security: []
+    delete:
+      summary: 'Delete a post'
+      operationId: deleteAPost
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: ''
+        example: 16
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Endpoints
+    description: ''
