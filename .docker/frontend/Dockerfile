@@ -15,5 +15,7 @@ COPY ./frontend/ .
 
 RUN npm install --g @vue/cli
 
+RUN npm install
+
 # start app
 CMD ["npm", "run", "serve"]

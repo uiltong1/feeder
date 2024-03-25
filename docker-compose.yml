@@ -1,24 +1,24 @@
 version: '3.7'
 services:
-  redis:
+  feeder_redis:
     image: redis
     container_name: redis
     command: redis-server --requirepass redis --appendonly yes
     volumes:
       - .docker/redis:/var/lib/postgresql/data
     ports:
-      - 6379:6379
+      - 6377:6379
     restart: always
 
-  mysql:
+  feeder_mysql:
     image: mysql:8.0
-    container_name: mysql
+    container_name: feeder_mysql
     restart: unless-stopped
     ports:
-      - 3306:3306
+      - 3310:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: local
+      MYSQL_DATABASE: feeder
     volumes:
       - ./docker/mysql:/var/lib/mysql
     healthcheck:
@@ -29,8 +29,8 @@ services:
     networks:
       - server
 
-  php8.0:
-    container_name: php8_feeder
+  feeder_php:
+    container_name: feeder_php
     build:
       context: .docker/php/php8.0
     restart: always
@@ -39,13 +39,13 @@ services:
     volumes:
       - "./backend:/var/www/html"
     depends_on:
-      mysql:
+      feeder_mysql:
         condition: service_healthy
     networks:
       - server
 
-  nginx:
-    container_name: nginx
+  feeder_nginx:
+    container_name: feeder_nginx
     build:
       context: .docker/nginx
     volumes:
@@ -57,8 +57,8 @@ services:
     networks:
       - server
 
-  frontend:
-    container_name: frontend
+  feeder_frontend:
+    container_name: feeder_frontend
     build:
       context: .
       dockerfile: .docker/frontend/Dockerfile
@@ -67,7 +67,7 @@ services:
       - ./frontend/:/app
       - /app/node_modules
     ports:
-      - 8001:8080
+      - 8003:8080
     networks:
       - server
 
